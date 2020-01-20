@@ -1,0 +1,31 @@
+{
+  "name": "what_should_i_wear",
+  "version": "1.0.0",
+  "description": "An app dedicated to reading the weather and telling you how many layers you need.",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon ./server/server.js",
+    "client": "webpack --watch --mode=development",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "postinstall": "webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "@babel/preset-react": "^7.8.3",
+    "babel-loader": "^8.0.6",
+    "concurrently": "^5.0.2",
+    "express": "^4.16.3",
+    "nodemon": "^2.0.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-router-dom": "^5.1.2",
+    "request": "^2.88.0",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  }
+}
