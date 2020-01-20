@@ -1,12 +1,9 @@
-const handleResponseJSON = response => {
-  if (response.status >= 201) {
-    throw new Error("Bad response from server");
-  }
-  return response.json();
-};
+// Utility function for fetching a location's forecast and converting
+// that forecast for our React frontend
 
 const tempConvert = celsius => Math.round((celsius * 9) / 5 + 32);
 
+// converting the date into a more usable format
 const dateConvert = dateStr => {
   const date = new Date(dateStr);
   const day = date.getDate() + 1;
@@ -14,6 +11,7 @@ const dateConvert = dateStr => {
   return `${month}/${day}`;
 };
 
+// converting a day's celsius values to fahrenheit
 const convertForecast = weatherForecast => {
   weatherForecast.forEach(day => {
     day.min_temp = tempConvert(day.min_temp);
@@ -23,42 +21,63 @@ const convertForecast = weatherForecast => {
   });
 };
 
-// woeid = "Where in the World" id which can be used to get location's data
-export const fetchWoeId = queryLocation => {
-  fetch(`api/woeid/${queryLocation}`, {
+// function fetching data with a given url
+const fetchRequest = url => {
+  return fetch(`${url}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json"
     },
     credentials: "same-origin"
-  })
+  });
+};
+
+// intakes a response and returns a promise with the JSON from that response
+const handleResponseJSON = response => {
+  if (response.status >= 201) {
+    throw new Error("Bad response from server");
+  }
+  return response.json();
+};
+
+// woeid = "Where in the World" id which can be used to get location's data
+export const fetchWoeId = (queryLocation, callback) => {
+  const url = `api/woeid/${queryLocation}`;
+  fetchRequest(url)
     .then(response => {
       return handleResponseJSON(response);
     })
     .then(response => {
       if (response) {
         const woeid = response[0].woeid;
-        fetchLocationData(woeid);
+        fetchLocationData(woeid, callback);
+      } else {
+        // if we are unable to find a location we convey that to our user
+        return callback(
+          `We are unable to find a forecast for that location.
+          Please check your spelling and try again.`
+        );
       }
     });
 };
 
-const fetchLocationData = woeid => {
-  fetch(`api/location/${woeid}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    credentials: "same-origin"
-  })
+// fetch location data based on woeid (including weather forecast)
+const fetchLocationData = (woeid, callback) => {
+  const url = `api/location/${woeid}`;
+  fetchRequest(url)
     .then(response => {
       return handleResponseJSON(response);
     })
     .then(response => {
       if (response) {
+        // extract just the upcoming forecast form our response
         const weatherForecast = response.consolidated_weather;
+
+        // converting celsius and dates for our forecast
         convertForecast(weatherForecast);
-        return weatherForecast;
+
+        // pass our several days of weather forecast back to React
+        callback(weatherForecast);
       }
     });
 };

@@ -1,8 +1,10 @@
 import React from "react";
 
-const DayList = days => {
+import DayListItem from "./dayListItem";
+
+const DayList = ({ days }) => {
   return (
-    <ul>
+    <ul className="day-list">
       {days.map(day => (
         <DayListItem key={day.id} day={day} />
       ))}

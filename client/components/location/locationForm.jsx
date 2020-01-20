@@ -1,13 +1,14 @@
 import React from "react";
 import { fetchWoeId } from "../../util/weatherFetch";
 import DayList from "../day/dayList";
+import Button from "react-bootstrap/Button";
 
 class LocationForm extends React.Component {
   constructor() {
     super();
     this.state = {
       locationInput: "",
-      day: undefined
+      days: ""
     };
 
     this.submitForm = this.submitForm.bind(this);
@@ -20,16 +21,22 @@ class LocationForm extends React.Component {
   submitForm(e) {
     e.preventDefault();
     let queryLocation = this.state.locationInput;
-    const daysOfForecast = fetchWoeId(queryLocation).then(daysOfForecast =>
-      this.setState({ days: daysOfForecast })
+    fetchWoeId(queryLocation, weatherForecast =>
+      this.setState({ days: weatherForecast })
     );
   }
 
-  render() {
-    let dayComponent;
-    if (this.state.days) {
-      dayComponent = <DayList days={this.state.days} />;
+  checkForForecast() {
+    if (typeof this.state.days === "object") {
+      return <DayList days={this.state.days} />;
+    } else if (this.state.days) {
+      return this.state.days;
     }
+  }
+
+  render() {
+    let dayComponent = this.checkForForecast();
+
     return (
       <div>
         <form onSubmit={this.submitForm}>
@@ -39,7 +46,9 @@ class LocationForm extends React.Component {
             value={this.state.locationInput}
             onChange={this.update("locationInput")}
           />
-          <button>Check Dates</button>
+          <Button type="submit" variant="outline-primary">
+            What Should I Wear?
+          </Button>
         </form>
         {dayComponent}
       </div>
