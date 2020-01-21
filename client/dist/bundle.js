@@ -378,20 +378,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchWoeId", function() { return fetchWoeId; });
 // Utility function for fetching a location's forecast and converting
 // that forecast for our React frontend
-var tempConvert = function tempConvert(celsius) {
-  return Math.round(celsius * 9 / 5 + 32);
-}; // converting the date into a more usable format
-
-
-var dateConvert = function dateConvert(dateStr) {
-  var date = new Date(dateStr);
-  var day = date.getDate() + 1;
-  var month = date.getMonth() + 1;
-  return "".concat(month, "/").concat(day);
-}; // converting celsius, dates, and adding clothing recommendations for
+// converting celsius, dates, and adding clothing recommendations for
 // each day of our forecast
-
-
 var prepareForecast = function prepareForecast(weatherForecast) {
   weatherForecast.forEach(function (day) {
     day.min_temp = tempConvert(day.min_temp);
@@ -400,23 +388,35 @@ var prepareForecast = function prepareForecast(weatherForecast) {
     day.applicable_date = dateConvert(day.applicable_date);
     day.clothesMessage = clothesRecommendation(day);
   });
+}; // converting the date into a more usable format
+
+
+var dateConvert = function dateConvert(dateStr) {
+  var date = new Date(dateStr);
+  var day = date.getDate() + 1;
+  var month = date.getMonth() + 1;
+  return "".concat(month, "/").concat(day);
+};
+
+var tempConvert = function tempConvert(celsius) {
+  return Math.round(celsius * 9 / 5 + 32);
 }; // function for setting a property on each day object with the recommended
 // clothing for that day
 
 
 var clothesRecommendation = function clothesRecommendation(day) {
   if (isRaining(day)) {
-    return "It's raining - make sure to wear a hood!";
+    return "It will be raining - make sure to wear a hood!";
   } else if (day.max_temp <= 32) {
-    return "It's freezing - literally! Wear all your layers.";
+    return "It will be freezing - literally! Wear all your layers.";
   } else if (day.max_temp <= 50) {
-    return "It's pretty chilly - wear at least two layers.";
+    return "It is gonna be pretty chilly - wear at least two layers.";
   } else if (day.max_temp <= 65) {
-    return "A little brisk - bring a medium weight coat.";
+    return "It will be a little brisk - bring a medium weight coat.";
   } else if (day.max_temp <= 75) {
-    return "It's pretty nice out there! Bring a light coat.";
+    return "It will be pretty nice out there! Bring a light coat.";
   } else {
-    return "It's hot! Bust out the shorts and sunglasses!";
+    return "It is gonna be hot! Bust out the shorts and sunglasses!";
   }
 };
 
