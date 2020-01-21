@@ -1,16 +1,6 @@
 // Utility function for fetching a location's forecast and converting
 // that forecast for our React frontend
 
-const tempConvert = celsius => Math.round((celsius * 9) / 5 + 32);
-
-// converting the date into a more usable format
-const dateConvert = dateStr => {
-  const date = new Date(dateStr);
-  const day = date.getDate() + 1;
-  const month = date.getMonth() + 1;
-  return `${month}/${day}`;
-};
-
 // converting celsius, dates, and adding clothing recommendations for
 // each day of our forecast
 const prepareForecast = weatherForecast => {
@@ -23,21 +13,31 @@ const prepareForecast = weatherForecast => {
   });
 };
 
+// converting the date into a more usable format
+const dateConvert = dateStr => {
+  const date = new Date(dateStr);
+  const day = date.getDate() + 1;
+  const month = date.getMonth() + 1;
+  return `${month}/${day}`;
+};
+
+const tempConvert = celsius => Math.round((celsius * 9) / 5 + 32);
+
 // function for setting a property on each day object with the recommended
 // clothing for that day
 const clothesRecommendation = day => {
   if (isRaining(day)) {
-    return "It's raining - make sure to wear a hood!";
+    return "It will be raining - make sure to wear a hood!";
   } else if (day.max_temp <= 32) {
-    return "It's freezing - literally! Wear all your layers.";
+    return "It will be freezing - literally! Wear all your layers.";
   } else if (day.max_temp <= 50) {
-    return "It's pretty chilly - wear at least two layers.";
+    return "It is gonna be pretty chilly - wear at least two layers.";
   } else if (day.max_temp <= 65) {
-    return "A little brisk - bring a medium weight coat.";
+    return "It will be a little brisk - bring a medium weight coat.";
   } else if (day.max_temp <= 75) {
-    return "It's pretty nice out there! Bring a light coat.";
+    return "It will be pretty nice out there! Bring a light coat.";
   } else {
-    return "It's hot! Bust out the shorts and sunglasses!";
+    return "It is gonna be hot! Bust out the shorts and sunglasses!";
   }
 };
 

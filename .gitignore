@@ -1,1 +1,7 @@
-node_modules
+# Ignore our dependencies
+/node_modules
+# Ignore our bundle
+bundle.js
+bundle.js.map
+# Ignore any pesky .DS_Store
+.DS_Store
