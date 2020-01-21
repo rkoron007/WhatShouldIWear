@@ -13,15 +13,12 @@ give clothing recommendations based on that forecast.
 
 ## How it Works
 
-_What Should I Wear?_ uses a Node & Express backend with a React frontend. Below
-is a gif with an example of how _What Should I Wear?_ works:
-
-![][demo-gif]
+_What Should I Wear?_ uses a Node & Express backend with a React frontend.
 
 The _What Should I Wear?_ React frontend queries the Node/Express backend which
-will then make a `fetch` request to the [MetaWeather API][metaweather-api] for a
-city name, and if the city is valid, the response will return a `woeid` (which
-stands for a 'Where in the World' id).
+will then make a `fetch` request to the [MetaWeather API][metaweather-api] with
+a city name. If the city name is valid, the returned response from the `fetch`
+request will contain a `woeid` (which stands for a 'Where in the World' id).
 
 ```js
 export const fetchWoeId = (queryLocation, callback) => {
@@ -49,11 +46,9 @@ export const fetchWoeId = (queryLocation, callback) => {
 };
 ```
 
-The return `woeid` will be used for an additional `fetch` request to find the
-weather forecast for the specified location (using the `woeid`). The returned
-weather forecast which will be handed back to our React frontend for rendering.
-
-[demo-gif]: https://media.giphy.com/media/W6jiJJjw1dUEVwDpqW/giphy.gif
+The returned `woeid` will be used for an additional `fetch` request to find the
+weather forecast for the specified location. The returned weather forecast will
+be handed back to our React frontend for rendering.
 
 ## Future Features
 
