@@ -2,6 +2,7 @@ import React from "react";
 
 import Card from "react-bootstrap/Card";
 
+// render each day of the forecast
 const DayListItem = ({ day }) => {
   return (
     <li>

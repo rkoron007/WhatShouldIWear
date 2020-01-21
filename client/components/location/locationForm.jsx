@@ -35,14 +35,17 @@ class LocationForm extends React.Component {
   }
 
   checkForForecast() {
+    // if we have a weather forecast array we'll render the DayList component
     if (typeof this.state.days === "object") {
       return <DayList days={this.state.days} />;
     } else if (this.state.days) {
+      // otherwise we will have an error to present to the user
       return <p className="error-message">{this.state.days}</p>;
     }
   }
 
   setSpinner() {
+    // if loading we will show a spinner
     if (this.state.loading) {
       return <Spinner animation="border" variant="primary" />;
     } else {

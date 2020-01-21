@@ -11,7 +11,7 @@ const Greeting = () => {
     <Jumbotron>
       <h1>What Should I Wear?</h1>
       <p>
-        Have you ever looked at the forecast and not known what to wear?{" "}
+        Have you ever looked at the forecast and not known what to wear?
         <strong>We are here to help!</strong>
         <br></br>
         Enter a city below for a 5+ day weather forecast and clothing
@@ -21,6 +21,8 @@ const Greeting = () => {
   );
 };
 
+// The HashRouter, Switch, and Redirect components will ensure that users will
+// not be able to navigate away from the main page
 const App = () => {
   return (
     <HashRouter>

@@ -4,7 +4,7 @@ const request = require("request");
 
 const METAWEATHER_URL = "https://www.metaweather.com/api/";
 
-// rendering our main html file with React
+// rendering our main html file which will be used by React to render
 router.get("/", (req, res) => {
   res.sendFile("index.html");
 });

@@ -2,6 +2,7 @@ import React from "react";
 
 import DayListItem from "./dayListItem";
 
+// render the weather forecast
 const DayList = ({ days }) => {
   return (
     <ul className="day-list">
