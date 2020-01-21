@@ -1,3 +1,60 @@
-#day-list {
+body {
+  background-color: #e9ecef;
+}
+.day-list {
   list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  margin: 30px;
+}
+
+.day-list > li {
+  padding-bottom: 15px;
+}
+
+.location-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+.error-message {
+  text-align: center;
+  padding-top: 10px;
+}
+
+/* Bootstrap Styles */
+.card-img-top {
+  width: 70%;
+  margin: auto;
+  padding-top: 10px;
+}
+
+.spinner-border {
+  margin: auto;
+  display: flex;
+  padding-top: 20px;
+}
+
+#city-input-group {
+  width: 500px;
+}
+
+.jumbotron {
+  background-color: #1f7a8c;
+}
+
+.btn-outline-primary {
+  color: white;
+  background-color: #1f7a8c;
+  border-color: #1f7a8c;
+}
+
+.btn-outline-primary:hover {
+  color: #1f7a8c;
+  background-color: white;
+  border-color: #1f7a8c;
 }

@@ -11,14 +11,43 @@ const dateConvert = dateStr => {
   return `${month}/${day}`;
 };
 
-// converting a day's celsius values to fahrenheit
-const convertForecast = weatherForecast => {
+// converting celsius, dates, and adding clothing recommendations for
+// each day of our forecast
+const prepareForecast = weatherForecast => {
   weatherForecast.forEach(day => {
     day.min_temp = tempConvert(day.min_temp);
     day.max_temp = tempConvert(day.max_temp);
     day.the_temp = tempConvert(day.the_temp);
     day.applicable_date = dateConvert(day.applicable_date);
+    day.clothesMessage = clothesRecommendation(day);
   });
+};
+
+// function for setting a property on each day object with the recommended
+// clothing for that day
+const clothesRecommendation = day => {
+  if (isRaining(day)) {
+    return "It's raining - make sure to wear a hood!";
+  } else if (day.max_temp <= 32) {
+    return "It's freezing - literally! Wear all your layers.";
+  } else if (day.max_temp <= 50) {
+    return "It's pretty chilly - wear at least two layers.";
+  } else if (day.max_temp <= 65) {
+    return "A little brisk - bring a medium weight coat.";
+  } else if (day.max_temp <= 75) {
+    return "It's pretty nice out there! Bring a light coat.";
+  } else {
+    return "It's hot! Bust out the shorts and sunglasses!";
+  }
+};
+
+const isRaining = weather => {
+  // grab the weather for tomorrow
+  const rains = ["h", "t", "hr", "lr", "s"];
+  if (rains.includes(weather.weather_state_abbr)) {
+    return true;
+  }
+  return false;
 };
 
 // function fetching data with a given url
@@ -48,7 +77,7 @@ export const fetchWoeId = (queryLocation, callback) => {
       return handleResponseJSON(response);
     })
     .then(response => {
-      if (response) {
+      if (response.length > 0) {
         const woeid = response[0].woeid;
         fetchLocationData(woeid, callback);
       } else {
@@ -73,8 +102,9 @@ const fetchLocationData = (woeid, callback) => {
         // extract just the upcoming forecast form our response
         const weatherForecast = response.consolidated_weather;
 
-        // converting celsius and dates for our forecast
-        convertForecast(weatherForecast);
+        // converting celsius, dates, and adding clothing recommendations for
+        // each day of our forecast
+        prepareForecast(weatherForecast);
 
         // pass our several days of weather forecast back to React
         callback(weatherForecast);
