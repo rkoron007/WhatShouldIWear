@@ -42,7 +42,7 @@ const clothesRecommendation = day => {
 };
 
 const isRaining = weather => {
-  // grab the weather for tomorrow
+  // different kinds of rain, e.g. "thunder"
   const rains = ["h", "t", "hr", "lr", "s"];
   if (rains.includes(weather.weather_state_abbr)) {
     return true;
@@ -61,7 +61,7 @@ const fetchRequest = url => {
   });
 };
 
-// intakes a response and returns a promise with the JSON from that response
+// checks response status, returns response JSON
 const handleResponseJSON = response => {
   if (response.status >= 201) {
     throw new Error("Bad response from server");
@@ -81,7 +81,6 @@ export const fetchWoeId = (queryLocation, callback) => {
         const woeid = response[0].woeid;
         fetchLocationData(woeid, callback);
       } else {
-        // if we are unable to find a location we convey that to our user
         return callback(
           `We are unable to find a forecast for that location.
           Please check your spelling and try again.`
@@ -99,11 +98,11 @@ const fetchLocationData = (woeid, callback) => {
     })
     .then(response => {
       if (response) {
-        // extract just the upcoming forecast form our response
+        // extract the upcoming forecast from our response
         const weatherForecast = response.consolidated_weather;
 
-        // converting celsius, dates, and adding clothing recommendations for
-        // each day of our forecast
+        // add clothing recommendations, convert celsius, and format dates
+        // for each day of our forecast
         prepareForecast(weatherForecast);
 
         // pass our several days of weather forecast back to React

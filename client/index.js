@@ -1,7 +1,6 @@
-//React
 import React from "react";
 import ReactDOM from "react-dom";
-//Component
+//Components
 import App from "./components/App";
 
 // setting up React
